@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Windows.Forms;
 using Micromons.Tools;
+
+// ReSharper disable FieldCanBeMadeReadOnly.Local
 // ReSharper disable RedundantExplicitArrayCreation
 
 namespace Micromons
@@ -12,7 +14,6 @@ namespace Micromons
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
         private IContainer components = null;
         #endregion
 
@@ -250,11 +251,10 @@ namespace Micromons
             this.Controls.Add(this.displayPanel);
             this.Controls.Add(this.menuBar);
             this.MainMenuStrip = this.menuBar;
-            this.MaximizeBox = false;
             this.MinimumSize = new Size(1000, 800);
             this.Name = "MainForm";
             this.SizeGripStyle = SizeGripStyle.Show;
-            this.Text = "Micromons simulation";
+            this.Text = "Micromons Simulation";
             FormClosing += MainForm_FormClosing;
             this.displayPanel.ResumeLayout(false);
             ((ISupportInitialize)this.simulationImage).EndInit();
@@ -263,7 +263,6 @@ namespace Micromons
             this.simulationBox.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
-
         }
         #endregion
 
