@@ -1,6 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+
+//ReSharper disable FieldCanBeMadeReadOnly.Local
+//ReSharper disable RedundantDelegateCreation
 
 namespace Micromons
 {
@@ -10,7 +14,6 @@ namespace Micromons
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
         private IContainer components = null;
         #endregion
 
@@ -44,6 +47,7 @@ namespace Micromons
             this.sourceLink = new LinkLabel();
             this.licenseImage = new PictureBox();
             this.versionLabel = new Label();
+            this.iconLink = new LinkLabel();
             ((ISupportInitialize)this.logoPictureBox).BeginInit();
             ((ISupportInitialize)this.licenseImage).BeginInit();
             SuspendLayout();
@@ -79,29 +83,29 @@ namespace Micromons
             this.okButton.TabIndex = 15;
             this.okButton.Text = "Ok";
             this.okButton.UseVisualStyleBackColor = true;
-            this.okButton.Click += okButton_Click;
+            this.okButton.Click += new EventHandler(okButton_Click);
             // 
             // userLink
             // 
             this.userLink.AutoSize = true;
-            this.userLink.Location = new Point(197, 206);
+            this.userLink.Location = new Point(197, 189);
             this.userLink.Name = "userLink";
             this.userLink.Size = new Size(119, 17);
             this.userLink.TabIndex = 16;
             this.userLink.TabStop = true;
             this.userLink.Text = "/u/Morning_Fresh";
-            this.userLink.LinkClicked += userLink_LinkClicked;
+            this.userLink.LinkClicked += new LinkLabelLinkClickedEventHandler(userLink_LinkClicked);
             // 
             // opLink
             // 
             this.opLink.AutoSize = true;
-            this.opLink.Location = new Point(197, 223);
+            this.opLink.Location = new Point(197, 206);
             this.opLink.Name = "opLink";
             this.opLink.Size = new Size(102, 17);
             this.opLink.TabIndex = 17;
             this.opLink.TabStop = true;
             this.opLink.Text = "Original thread";
-            this.opLink.LinkClicked += opLink_LinkClicked;
+            this.opLink.LinkClicked += new LinkLabelLinkClickedEventHandler(opLink_LinkClicked);
             // 
             // sourceLink
             // 
@@ -112,7 +116,7 @@ namespace Micromons
             this.sourceLink.TabIndex = 18;
             this.sourceLink.TabStop = true;
             this.sourceLink.Text = "Source";
-            this.sourceLink.LinkClicked += sourceLink_LinkClicked;
+            this.sourceLink.LinkClicked += new LinkLabelLinkClickedEventHandler(sourceLink_LinkClicked);
             // 
             // licenseImage
             // 
@@ -124,7 +128,7 @@ namespace Micromons
             this.licenseImage.SizeMode = PictureBoxSizeMode.AutoSize;
             this.licenseImage.TabIndex = 19;
             this.licenseImage.TabStop = false;
-            this.licenseImage.DoubleClick += licenseImage_Click;
+            this.licenseImage.DoubleClick += new EventHandler(licenseImage_Click);
             // 
             // versionLabel
             // 
@@ -135,11 +139,23 @@ namespace Micromons
             this.versionLabel.TabIndex = 20;
             this.versionLabel.Text = "Version:";
             // 
+            // iconLink
+            // 
+            this.iconLink.AutoSize = true;
+            this.iconLink.Location = new Point(197, 223);
+            this.iconLink.Name = "iconLink";
+            this.iconLink.Size = new Size(81, 17);
+            this.iconLink.TabIndex = 21;
+            this.iconLink.TabStop = true;
+            this.iconLink.Text = "Icon source";
+            this.iconLink.LinkClicked += new LinkLabelLinkClickedEventHandler(iconLink_LinkClicked);
+            // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new SizeF(8F, 16F);
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new Size(430, 334);
+            this.Controls.Add(this.iconLink);
             this.Controls.Add(this.versionLabel);
             this.Controls.Add(this.licenseImage);
             this.Controls.Add(this.sourceLink);
@@ -162,19 +178,14 @@ namespace Micromons
             ((ISupportInitialize)this.licenseImage).EndInit();
             ResumeLayout(false);
             PerformLayout();
-
         }
         #endregion
 
         #region Form components
-        private PictureBox logoPictureBox;
-        private Label infoLabel;
+        private PictureBox logoPictureBox, licenseImage;
+        private Label infoLabel, versionLabel;
         private Button okButton;
-        private LinkLabel userLink;
-        private LinkLabel opLink;
-        private LinkLabel sourceLink;
-        private PictureBox licenseImage;
-        private Label versionLabel;
+        private LinkLabel userLink, opLink, iconLink, sourceLink;
         #endregion
     }
 }

@@ -54,14 +54,6 @@ namespace Micromons
         }
 
         /// <summary>
-        /// License image clicked event
-        /// </summary>
-        private void licenseImage_Click(object sender, EventArgs e)
-        {
-            Process.Start("https://creativecommons.org/licenses/by-sa/3.0/");
-        }
-
-        /// <summary>
         /// OP link clicked event
         /// </summary>
         private void opLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -75,6 +67,22 @@ namespace Micromons
         private void sourceLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://github.com/StupidChris/Micromons");
+        }
+
+        /// <summary>
+        /// Icon source link clicked event
+        /// </summary>
+        private void iconLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://www.iconfinder.com/icons/214848/longico_pikachu_pokeball_pokemon_icon");
+        }
+        
+        /// <summary>
+        /// License image clicked event
+        /// </summary>
+        private void licenseImage_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://creativecommons.org/licenses/by-sa/3.0/");
         }
         #endregion
     }

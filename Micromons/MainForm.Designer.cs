@@ -1,10 +1,12 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using Micromons.Tools;
 
-// ReSharper disable FieldCanBeMadeReadOnly.Local
-// ReSharper disable RedundantExplicitArrayCreation
+//ReSharper disable RedundantDelegateCreation
+//ReSharper disable FieldCanBeMadeReadOnly.Local
+//ReSharper disable RedundantExplicitArrayCreation
 
 namespace Micromons
 {
@@ -39,6 +41,7 @@ namespace Micromons
         /// </summary>
         private void InitializeComponent()
         {
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(MainForm));
             this.displayPanel = new Panel();
             this.simulationImage = new PictureBox();
             this.menuBar = new MenuStrip();
@@ -104,17 +107,17 @@ namespace Micromons
             // aboutMenu
             // 
             this.aboutMenu.Name = "aboutMenu";
-            this.aboutMenu.Size = new Size(181, 26);
+            this.aboutMenu.Size = new Size(161, 26);
             this.aboutMenu.Text = "About";
-            this.aboutMenu.Click += aboutMenu_Click;
+            this.aboutMenu.Click += new EventHandler(aboutMenu_Click);
             // 
             // exitMenu
             // 
             this.exitMenu.Name = "exitMenu";
             this.exitMenu.ShortcutKeys = Keys.Alt | Keys.F4;
-            this.exitMenu.Size = new Size(181, 26);
+            this.exitMenu.Size = new Size(161, 26);
             this.exitMenu.Text = "Exit";
-            this.exitMenu.Click += exitMenu_Click;
+            this.exitMenu.Click += new EventHandler(exitMenu_Click);
             // 
             // progressBar
             // 
@@ -133,7 +136,7 @@ namespace Micromons
             this.simulateButton.TabIndex = 5;
             this.simulateButton.Text = "Simulate once";
             this.simulateButton.UseVisualStyleBackColor = true;
-            this.simulateButton.Click += simulateButton_Click;
+            this.simulateButton.Click += new EventHandler(simulateButton_Click);
             // 
             // startSimulationButtom
             // 
@@ -143,7 +146,7 @@ namespace Micromons
             this.startSimulationButtom.TabIndex = 6;
             this.startSimulationButtom.Text = "Start simlation";
             this.startSimulationButtom.UseVisualStyleBackColor = true;
-            this.startSimulationButtom.Click += startSimulationButtom_Click;
+            this.startSimulationButtom.Click += new EventHandler(startSimulationButtom_Click);
             // 
             // stopSimulationButton
             // 
@@ -154,7 +157,7 @@ namespace Micromons
             this.stopSimulationButton.TabIndex = 7;
             this.stopSimulationButton.Text = "Stop simulation";
             this.stopSimulationButton.UseVisualStyleBackColor = true;
-            this.stopSimulationButton.Click += stopSimulationButton_Click;
+            this.stopSimulationButton.Click += new EventHandler(stopSimulationButton_Click);
             // 
             // simulationBox
             // 
@@ -177,7 +180,7 @@ namespace Micromons
             this.newSimulationButton.TabIndex = 9;
             this.newSimulationButton.Text = "Create new simulation";
             this.newSimulationButton.UseVisualStyleBackColor = true;
-            this.newSimulationButton.Click += newSimulationButton_Click;
+            this.newSimulationButton.Click += new EventHandler(newSimulationButton_Click);
             // 
             // rankingView
             // 
@@ -220,23 +223,23 @@ namespace Micromons
             // newSimWorker
             // 
             this.newSimWorker.WorkerReportsProgress = true;
-            this.newSimWorker.DoWork += CreateNewSimulation;
-            this.newSimWorker.ProgressChanged += UpdateProgress;
-            this.newSimWorker.RunWorkerCompleted += newSimWorker_RunWorkerCompleted;
+            this.newSimWorker.DoWork += new DoWorkEventHandler(CreateNewSimulation);
+            this.newSimWorker.ProgressChanged += new ProgressChangedEventHandler(UpdateProgress);
+            this.newSimWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(newSimWorker_RunWorkerCompleted);
             // 
             // simOnceWorker
             // 
             this.simOnceWorker.WorkerReportsProgress = true;
-            this.simOnceWorker.DoWork += SimulateOnce;
-            this.simOnceWorker.ProgressChanged += UpdateProgress;
-            this.simOnceWorker.RunWorkerCompleted += simOnceWorker_RunWorkerCompleted;
+            this.simOnceWorker.DoWork += new DoWorkEventHandler(SimulateOnce);
+            this.simOnceWorker.ProgressChanged += new ProgressChangedEventHandler(UpdateProgress);
+            this.simOnceWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(simOnceWorker_RunWorkerCompleted);
             // 
             // simContinuousWorker
             // 
             this.simContinuousWorker.WorkerReportsProgress = true;
-            this.simContinuousWorker.DoWork += SimulateContinuous;
-            this.simContinuousWorker.ProgressChanged += UpdateProgress;
-            this.simContinuousWorker.RunWorkerCompleted += simContinuousWorker_RunWorkerCompleted;
+            this.simContinuousWorker.DoWork += new DoWorkEventHandler(SimulateContinuous);
+            this.simContinuousWorker.ProgressChanged += new ProgressChangedEventHandler(UpdateProgress);
+            this.simContinuousWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(simContinuousWorker_RunWorkerCompleted);
             // 
             // MainForm
             // 
@@ -250,12 +253,13 @@ namespace Micromons
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.displayPanel);
             this.Controls.Add(this.menuBar);
+            this.Icon = (Icon)resources.GetObject("$this.Icon");
             this.MainMenuStrip = this.menuBar;
             this.MinimumSize = new Size(1000, 800);
             this.Name = "MainForm";
             this.SizeGripStyle = SizeGripStyle.Show;
             this.Text = "Micromons Simulation";
-            FormClosing += MainForm_FormClosing;
+            FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
             this.displayPanel.ResumeLayout(false);
             ((ISupportInitialize)this.simulationImage).EndInit();
             this.menuBar.ResumeLayout(false);
@@ -263,30 +267,22 @@ namespace Micromons
             this.simulationBox.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
+
         }
         #endregion
 
         #region Form components
         private Panel displayPanel;
         private MenuStrip menuBar;
-        private ToolStripMenuItem menuStrip;
-        private ToolStripMenuItem aboutMenu;
-        private ToolStripMenuItem exitMenu;
+        private ToolStripMenuItem menuStrip, aboutMenu, exitMenu;
         private PictureBox simulationImage;
         private ProgressBar progressBar;
-        private Button simulateButton;
-        private Button startSimulationButtom;
-        private Button stopSimulationButton;
+        private Button newSimulationButton, simulateButton, startSimulationButtom, stopSimulationButton;
         private GroupBox simulationBox;
-        private Button newSimulationButton;
         private ListView rankingView;
-        private ColumnHeader rankColumn;
-        private ColumnHeader amountColumn;
-        private ColumnHeader typesColumn;
+        private ColumnHeader rankColumn, amountColumn, typesColumn;
         private Label frameLabel;
-        private AbortableWorker newSimWorker;
-        private AbortableWorker simOnceWorker;
-        private AbortableWorker simContinuousWorker;
+        private AbortableWorker newSimWorker, simOnceWorker, simContinuousWorker;
         #endregion
     }
 }
