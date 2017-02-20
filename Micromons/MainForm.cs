@@ -11,6 +11,11 @@ using Micromons.Simulation;
 using Micromons.Tools;
 using TypeStats = Micromons.Simulation.Grid.TypeStats;
 
+/* This Micromons simulation was created by Christophe Savard (stupid_chris) and is licensed
+ * licensed under CC-BY-SA 3.0 Unported. The entire credit for the original idea and simulation
+ * code goes to Reddit user /u/Morning_Fresh, none of this would have been possible without
+ * his original work and idea. */
+
 namespace Micromons
 {
     /// <summary>
@@ -46,8 +51,6 @@ namespace Micromons
         private bool simulate;
         /// <summary> Current frame number </summary>
         private int frame;
-        /// <summary> Timing block event </summary>
-        private readonly ManualResetEvent block;
         /// <summary> Simulation image reference </summary>
         private readonly Bitmap image;
         /// <summary> List of all BackgroundWorkers </summary>
@@ -67,7 +70,6 @@ namespace Micromons
             this.progressBar.Maximum = size * size;
 
             //Setup helpers
-            this.block = new ManualResetEvent(true);
             this.wokers = new List<AbortableWorker>(3) { this.newSimWorker, this.simOnceWorker, this.simContinuousWorker };
             this.timer = new Stopwatch();
 
@@ -258,7 +260,9 @@ namespace Micromons
         /// <param name="worker">BackgroundWorker to report progress on</param>
         private void Simulate(BackgroundWorker worker)
         {
+            //Necessary when simulating multiple times in a row, else the UI updates queue faster than they apply
             if (worker == this.simContinuousWorker) { Thread.Sleep(100); }
+
             this.timer.Restart();
 
             this.simulation.Simulate(worker);
@@ -275,12 +279,6 @@ namespace Micromons
         {
             this.newSimulationButton.SetEnabled(true);
             this.UseWaitCursor = false;
-
-            #if DEBUG
-            Log("Lock reset.");
-            #endif
-
-            this.block.Reset();
         }
 
         /// <summary>
@@ -300,13 +298,6 @@ namespace Micromons
             UpdateRanking();
             //Update frame text display
             IncrementFrame();
-
-            #if DEBUG
-            Log("Releasing lock.");
-            #endif
-            
-            //Release display update lock
-            this.block.Set();
         }
 
         /// <summary>
@@ -326,7 +317,7 @@ namespace Micromons
             //Add items for all types present
             for (int i = 0; i < this.currentStats.Count; )
             {
-                Grid.TypeStats stats = this.currentStats[i++];
+                TypeStats stats = this.currentStats[i++];
                 this.rankingView.Items.Add(new ListViewItem(new[] { i.ToString(), stats.Amount.ToString(), stats.Pair.ToString() }));
             }
 
